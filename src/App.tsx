@@ -445,16 +445,18 @@ function Entry(props: {
 				EntryInput={PersonWithRoleInput}
 			/>
 			<TextInput
-				label="Publisher"
+				label={{ name: "Publisher", extra: true }}
 				data={props.data.publisher.name}
 				set={(v) => props.set("publisher", "name", v)}
 			/>
 			<Show when={props.data.publisher.name !== ""}>
-				<TextInput
-					label="Publisher location"
-					data={props.data.publisher.location}
-					set={(v) => props.set("publisher", "location", v)}
-				/>
+				<div class="indent">
+					<TextInput
+						label="Publisher location"
+						data={props.data.publisher.location}
+						set={(v) => props.set("publisher", "location", v)}
+					/>
+				</div>
 			</Show>
 			<TextInput
 				label={{
@@ -538,18 +540,20 @@ function Entry(props: {
 				placeholder="01:25:03"
 			/>
 			<TextInput
-				label="URL"
+				label={{ name: "URL", extra: true }}
 				data={props.data.url.value}
 				set={(v) => props.set("url", "value", v)}
 			/>
 			<Show when={props.data.url.value !== ""}>
-				<TextInput
-					label="Accessed"
-					data={props.data.url.date}
-					set={(v) => props.set("url", "date", v)}
-					pattern={DATE_REGEX}
-					title={DATE_TITLE}
-				/>
+				<div class="indent">
+					<TextInput
+						label="Accessed"
+						data={props.data.url.date}
+						set={(v) => props.set("url", "date", v)}
+						pattern={DATE_REGEX}
+						title={DATE_TITLE}
+					/>
+				</div>
 			</Show>
 			<SerialNumberInput
 				label="Serial number"
@@ -568,25 +572,28 @@ function Entry(props: {
 					name: "Archive",
 					description:
 						"name of the institution/collection where the item is kept",
+					extra: true,
 				}}
 				data={props.data.archive}
 				set={(v) => props.set("archive", v)}
 			/>
 			<Show when={props.data.archive !== ""}>
-				<TextInput
-					label="Archive location"
-					data={props.data.archive_location}
-					set={(v) => props.set("archive_location", v)}
-				/>
-				<TextInput
-					label={{
-						name: "Call number",
-						description:
-							"The number of the item in a library, institution, or collection.",
-					}}
-					data={props.data.call_number}
-					set={(v) => props.set("call_number", v)}
-				/>
+				<div class="indent">
+					<TextInput
+						label="Archive location"
+						data={props.data.archive_location}
+						set={(v) => props.set("archive_location", v)}
+					/>
+					<TextInput
+						label={{
+							name: "Call number",
+							description:
+								"The number of the item in a library, institution, or collection.",
+						}}
+						data={props.data.call_number}
+						set={(v) => props.set("call_number", v)}
+					/>
+				</div>
 			</Show>
 			<TextInput
 				label="Note"
@@ -1006,33 +1013,41 @@ function MaybeLabel(props: {
 type Label = string | LabelFields;
 type LabelFields = {
 	name: string;
-	description: string;
+	description?: string;
+	extra?: boolean;
 };
 
 function Label(props: {
 	label: Label;
 }): JSX.Element {
+	const fields = () =>
+		typeof props.label === "string" ? { name: props.label } : props.label;
 	const [help_shown, set_help_shown] = createSignal(false);
 	return (
-		<Show
-			when={typeof props.label !== "string"}
-			fallback={props.label as string}
-		>
-			{(props.label as LabelFields).name}
-			<span
-				class="help"
-				onclick={() => set_help_shown(!help_shown())}
-				onmouseover={() => set_help_shown(true)}
-				onmouseout={() => set_help_shown(false)}
-			>
-				?
-			</span>
-			<div class="help-popup">
-				<div class={help_shown() ? "shown" : ""}>
-					{(props.label as LabelFields).description}
+		<>
+			{fields().name}
+			<Show when={fields().description}>
+				<span
+					class="help"
+					onclick={() => set_help_shown(!help_shown())}
+					onmouseover={() => set_help_shown(true)}
+					onmouseout={() => set_help_shown(false)}
+				>
+					?
+				</span>
+				<div class="help-popup">
+					<div class={help_shown() ? "shown" : ""}>{fields().description}</div>
 				</div>
-			</div>
-		</Show>
+			</Show>
+			<Show when={fields().extra}>
+				<span
+					class="extra"
+					title="There are additional fields associated to this entry"
+				>
+					+
+				</span>
+			</Show>
+		</>
 	);
 }
 
