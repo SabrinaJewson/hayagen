@@ -39,7 +39,14 @@ export default function (): JSX.Element {
 				oninput={() => set_counter(counter() + 1)}
 			>
 				<p>
-					<button type="button" onclick={() => set_data(default_entry_data())}>
+					<button
+						type="button"
+						onclick={() => {
+							const new_data = default_entry_data();
+							new_data.type = data.type;
+							set_data(new_data);
+						}}
+					>
 						Clear fields
 					</button>{" "}
 					<button
@@ -904,7 +911,11 @@ function SerialNumberInput(props: {
 	);
 }
 
-const SERIAL_STRIP = ["https://doi.org/", "https://arxiv.org/abs/"];
+const SERIAL_STRIP = [
+	"https://doi.org/",
+	"https://dx.doi.org/",
+	"https://arxiv.org/abs/",
+];
 
 function TextInput(props: {
 	label?: Label;
