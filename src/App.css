@@ -6,6 +6,11 @@ body {
 	font-family: sans-serif;
 }
 
+main {
+	max-width: 650px;
+	margin: 0 auto;
+}
+
 .row {
 	margin: 5px 0;
 

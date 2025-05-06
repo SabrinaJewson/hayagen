@@ -2,11 +2,12 @@ import { createStore, SetStoreFunction } from "solid-js/store";
 import YAML from "yaml";
 import "./App.css";
 import {
-	createMemo,
+	createEffect,
 	createSignal,
 	For,
 	JSX,
 	Match,
+	onMount,
 	Show,
 	Switch,
 } from "solid-js";
@@ -14,30 +15,30 @@ import LANGS from "./langs.tsx";
 
 export default function (): JSX.Element {
 	const [label, set_label] = createSignal<string>("");
-	const [counter, set_counter] = createSignal(0);
 	const [data, set_data] = createStore<EntryData>(default_entry_data());
-	let form: HTMLFormElement;
-	const yaml = createMemo<string>((old) => {
-		if (counter() === 0) {
-			return "";
-		}
-		if (form.reportValidity() && label() !== "") {
-			return make_yaml(label(), data);
-		}
-		return old ?? "";
+	const [form, set_form] = createSignal<HTMLFormElement>();
+	const [yaml, set_yaml] = createSignal<string>("");
+	createEffect(() => {
+		// checkValidity is not reactive, so we need to always read all the data.
+		const label_clone = label() || "label";
+		const data_clone = read_recursive(data);
+		const form_ = form();
+		if (form_ === undefined) return;
+
+		// When e.g. pressing buttons makes the form invalid (for example, going from one to two
+		// authors), this memo gets updated before the DOM does, so we end up generating invalid
+		// YAML. Thus we delay a bit.
+		requestAnimationFrame(() => {
+			if (!form_?.checkValidity()) {
+				set_yaml("");
+			} else {
+				set_yaml(make_yaml(label_clone, data_clone));
+			}
+		});
 	});
 	return (
 		<>
-			<h1>
-				<a href="https://github.com/typst/hayagriva">Hayagriva</a> generator
-			</h1>
-			<form
-				ref={(f) => {
-					form = f;
-					set_counter(counter() + 1);
-				}}
-				oninput={() => set_counter(counter() + 1)}
-			>
+			<form ref={(f) => onMount(() => set_form(f))}>
 				<p>
 					<button
 						type="button"
@@ -63,13 +64,23 @@ export default function (): JSX.Element {
 					}}
 					data={label()}
 					set={set_label}
-					required
 				></TextInput>
 				<Entry data={data} set={set_data} />
 			</form>
 			<pre>{yaml()}</pre>
 		</>
 	);
+}
+
+function read_recursive<T>(data: T): T {
+	if (Array.isArray(data)) {
+		return data.map(read_recursive) as T;
+	} else if (data instanceof Object) {
+		return Object.fromEntries(
+			Object.entries(data).map(([k, v]) => [k, read_recursive(v)]),
+		) as T;
+	}
+	return data;
 }
 
 const types = [

@@ -9,4 +9,8 @@ export default defineConfig({
 		}),
 		pluginSolid(),
 	],
+	html: {
+		template: "./src/index.html",
+		title: "Hayagriva generator",
+	},
 });
