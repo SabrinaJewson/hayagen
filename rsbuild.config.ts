@@ -12,5 +12,8 @@ export default defineConfig({
 	html: {
 		template: "./src/index.html",
 		title: "Hayagriva generator",
+		meta: {
+			"color-scheme": "light dark",
+		},
 	},
 });
