@@ -17,6 +17,6 @@ export default defineConfig({
 		},
 	},
 	server: {
-		base: "/hayagen"
+		base: "/hayagen",
 	},
 });

@@ -19,7 +19,8 @@ body {
 	color: var(--fg);
 }
 
-main {
+main,
+footer {
 	max-width: 650px;
 	margin: 0 auto;
 }
