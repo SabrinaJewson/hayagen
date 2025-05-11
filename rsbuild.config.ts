@@ -16,4 +16,7 @@ export default defineConfig({
 			"color-scheme": "light dark",
 		},
 	},
+	server: {
+		base: "/hayagen"
+	},
 });
