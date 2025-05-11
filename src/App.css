@@ -82,7 +82,7 @@ select {
 	border: 1px solid grey;
 	border-radius: 2px;
 	padding: 2px 4px;
-	background: transparent;
+	background: var(--bg);
 	&:invalid {
 		border-color: red;
 	}
