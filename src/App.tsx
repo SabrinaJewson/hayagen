@@ -341,6 +341,7 @@ function make_yaml(label: string, data: EntryData): string {
 			return person.combined_name;
 		} else {
 			const person2: Record<string, unknown> = { ...person };
+			delete person2["combined_name"];
 			delete person2["kind"];
 			return person2;
 		}
