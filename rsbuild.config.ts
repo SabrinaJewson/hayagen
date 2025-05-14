@@ -41,6 +41,10 @@ export default defineConfig({
 				...value,
 				i18n: translations[entryName as Lang],
 				lang: entryName,
+				lang_options: LANGS.map(
+					(lang) =>
+						`<option value="${lang}">${translations[lang].language_name}</option>`,
+				).join(),
 			};
 		},
 	},

@@ -3,6 +3,7 @@
 	<head></head>
 	<body>
 		<main>
+			<select value="<%= lang %>" id="lang-select"><%= lang_options %></select>
 			<h1><%= i18n.title(s => `<a href="https://github.com/typst/hayagriva">${s}</a>`) %></h1>
 			<div id="<%= mountId %>"></div>
 		</main>

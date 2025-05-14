@@ -1,6 +1,7 @@
 import { type Plural, translation } from "./definition";
 
 export default translation({
+	language_name: "English",
 	title: (link) => `${link("Hayagriva")} generator`,
 	clear_fields: "Clear fields",
 	copy_yaml: "Copy yaml",

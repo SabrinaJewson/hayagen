@@ -4,6 +4,7 @@ export function translation(t: Translation): Translation {
 }
 
 export type Translation = {
+	language_name: string;
 	title: (link: (s: string) => string) => string;
 	clear_fields: string;
 	copy_yaml: string;

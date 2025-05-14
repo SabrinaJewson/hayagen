@@ -25,6 +25,11 @@ footer {
 	margin: 0 auto;
 }
 
+#lang-select {
+	float: right;
+	margin-top: 6px;
+}
+
 .row {
 	margin: 5px 0;
 
