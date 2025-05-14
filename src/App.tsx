@@ -758,6 +758,16 @@ function PersonFieldsInput(props: {
 			</Show>
 			<div class={props.label !== undefined ? "indent" : ""}>
 				<TextInput
+					label={i18n.person.prefix_label}
+					data={props.data.prefix}
+					set={(v) => props.set("prefix", v)}
+				/>
+				<TextInput
+					label={i18n.person.given_name_label}
+					data={props.data.given_name}
+					set={(v) => props.set("given_name", v)}
+				/>
+				<TextInput
 					label={i18n.person.name_label}
 					data={props.data.name}
 					set={(v) => props.set("name", v)}
@@ -766,16 +776,6 @@ function PersonFieldsInput(props: {
 				>
 					<Show when={props.label === undefined}>{props.children}</Show>
 				</TextInput>
-				<TextInput
-					label={i18n.person.given_name_label}
-					data={props.data.given_name}
-					set={(v) => props.set("given_name", v)}
-				/>
-				<TextInput
-					label={i18n.person.prefix_label}
-					data={props.data.prefix}
-					set={(v) => props.set("prefix", v)}
-				/>
 				<TextInput
 					label={i18n.person.suffix_label}
 					data={props.data.suffix}
