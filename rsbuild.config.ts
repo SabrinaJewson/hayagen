@@ -37,14 +37,16 @@ export default defineConfig({
 					).join(),
 				};
 			}
+			const lang = entryName as Lang;
 			return {
 				...value,
-				i18n: translations[entryName as Lang],
-				lang: entryName,
-				lang_options: LANGS.map(
-					(lang) =>
-						`<option value="${lang}">${translations[lang].language_name}</option>`,
-				).join(),
+				i18n: translations[lang],
+				lang,
+				lang_options: LANGS.map((other_lang) => {
+					const selected = other_lang === lang ? " selected" : "";
+					const name = translations[other_lang].language_name;
+					return `<option value="${other_lang}"${selected}>${name}</option>`;
+				}).join(),
 			};
 		},
 	},
