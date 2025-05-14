@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="<%= lang %>">
 	<head></head>
 	<body>
 		<main>
-			<h1><a href="https://github.com/typst/hayagriva">Hayagriva</a> generator</h1>
+			<h1><%= i18n.title(s => `<a href="https://github.com/typst/hayagriva">${s}</a>`) %></h1>
 			<div id="<%= mountId %>"></div>
 		</main>
 		<footer>
