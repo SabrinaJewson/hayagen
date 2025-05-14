@@ -5,7 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"build": "rsbuild build",
-		"check": "biome check --write",
+		"check": "tsc && biome check --write",
 		"dev": "rsbuild dev --open",
 		"fmt": "biome format --write",
 		"preview": "rsbuild preview"

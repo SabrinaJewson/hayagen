@@ -7,6 +7,7 @@ This is a simple web app that does exactly that.
 ## Development
 
 - `pnpm dev`: Runs the dev server
+- `pnpm check`: Runs lint checks
 - `pnpm fmt`: Formats the codebase
 
 ## Adding a new translation

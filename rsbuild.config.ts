@@ -3,10 +3,12 @@ import { pluginBabel } from "@rsbuild/plugin-babel";
 import { pluginSolid } from "@rsbuild/plugin-solid";
 import { LANGS, type Lang, translations } from "./src/translations";
 
+const base = "/hayagen";
+
 export default defineConfig({
 	source: {
 		entry: {
-			// TODO: lang redirect
+			index: "./src/redirect.ts",
 			...Object.fromEntries(LANGS.map((lang) => [lang, "./src/index.tsx"])),
 		},
 	},
@@ -17,12 +19,24 @@ export default defineConfig({
 		pluginSolid(),
 	],
 	html: {
-		template: "./src/index.html",
-		title: ({ entryName }) => translations[entryName as Lang].title((s) => s),
+		template: ({ entryName }) =>
+			entryName === "index" ? "./src/redirect.html" : "./src/index.html",
+		title: ({ entryName }) =>
+			entryName === "index"
+				? "Redirecting…"
+				: translations[entryName as Lang].title((s) => s),
 		meta: {
 			"color-scheme": "light dark",
 		},
 		templateParameters: (value, { entryName }) => {
+			if (entryName === "index") {
+				return {
+					...value,
+					langs: LANGS.map(
+						(lang) => `<li><a href="${base}/${lang}">${lang}</a></li>`,
+					).join(),
+				};
+			}
 			return {
 				...value,
 				i18n: translations[entryName as Lang],
@@ -31,6 +45,6 @@ export default defineConfig({
 		},
 	},
 	server: {
-		base: "/hayagen",
+		base,
 	},
 });
