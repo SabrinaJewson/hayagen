@@ -52,6 +52,10 @@ export default translation({
 		},
 		title_label: "Title",
 		author_label: plural("Author", "Authors"),
+		author_tooltips: {
+			add: "Add author",
+			remove: "Remove author",
+		},
 		date_label: "Date",
 		abstract_label: "Abstract",
 		genre_label: {
@@ -60,10 +64,18 @@ export default translation({
 				"Type, class, or subtype of the item (e.g. “Doctoral dissertation” for a PhD thesis; “NIH Publication” for an NIH technical report). Do not use for topical descriptions or categories (e.g. “adventure” for an adventure movie).",
 		},
 		editor_label: plural("Editor", "Editors"),
+		editor_tooltips: {
+			add: "Add editor",
+			remove: "Remove editor",
+		},
 		affiliated_label: {
 			name: plural("Affiliated", "Affiliated"),
 			description:
 				"persons involved with the item that do not fit author or editor",
+		},
+		affiliated_tooltips: {
+			add: "Add affiliated",
+			remove: "Remove affiliated",
 		},
 		publisher_label: "Publisher",
 		publisher_location_label: "Publisher location",
@@ -134,6 +146,10 @@ export default translation({
 			writer: "Writer",
 		},
 		names_label: "Names",
+		names_tooltips: {
+			add: "Add name",
+			remove: "Remove name",
+		},
 	},
 	person: {
 		name_label: "Name",

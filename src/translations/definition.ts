@@ -21,11 +21,14 @@ export type Translation = {
 		types: { [type in EntryType]: string };
 		title_label: Label;
 		author_label: Label<Plural>;
+		author_tooltips: ListTooltips;
 		date_label: Label;
 		abstract_label: Label;
 		genre_label: Label;
 		editor_label: Label<Plural>;
+		editor_tooltips: ListTooltips;
 		affiliated_label: Label<Plural>;
+		affiliated_tooltips: ListTooltips;
 		publisher_label: Label;
 		publisher_location_label: Label;
 		location_label: Label;
@@ -52,6 +55,7 @@ export type Translation = {
 		role_label: Label;
 		roles: { [role in Role]: string };
 		names_label: Label;
+		names_tooltips: ListTooltips;
 	};
 	person: {
 		name_label: Label;
@@ -139,3 +143,8 @@ export type LabelFields<T = string> = {
 };
 
 export type Plural = (n: number) => string;
+
+export type ListTooltips = {
+	add: string;
+	remove: string;
+};

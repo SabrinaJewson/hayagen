@@ -17,6 +17,7 @@ import {
 	type EntryType,
 	type Label,
 	type LabelFields,
+	type ListTooltips,
 	type Plural,
 	type Role,
 	type Translation,
@@ -349,6 +350,7 @@ function Entry(props: {
 				default={default_person()}
 				set={child_setter(props.set, "author")}
 				EntryInput={PersonInput}
+				tooltips={i18n.entry.author_tooltips}
 			/>
 			<TextInput
 				label={i18n.entry.date_label}
@@ -374,6 +376,7 @@ function Entry(props: {
 				default={default_person()}
 				set={child_setter(props.set, "editor")}
 				EntryInput={PersonInput}
+				tooltips={i18n.entry.editor_tooltips}
 			/>
 			<ListInput
 				label={i18n.entry.affiliated_label}
@@ -382,6 +385,7 @@ function Entry(props: {
 				allow_empty
 				set={child_setter(props.set, "affiliated")}
 				EntryInput={PersonWithRoleInput}
+				tooltips={i18n.entry.affiliated_tooltips}
 			/>
 			<TextInput
 				label={{ ...label_fields(i18n.entry.publisher_label), extra: true }}
@@ -557,6 +561,7 @@ function ListInput<T, L extends string | Plural>(props: {
 	}) => JSX.Element;
 	children?: JSX.Element;
 	required?: boolean;
+	tooltips: ListTooltips;
 }): JSX.Element {
 	let focusers: (() => void)[] = [];
 	const label = () => {
@@ -573,6 +578,7 @@ function ListInput<T, L extends string | Plural>(props: {
 					<span class="grow-me" />
 					<button
 						type="button"
+						title={props.tooltips.add}
 						onclick={() => {
 							props.set(0, props.default);
 							focusers[0]?.();
@@ -595,6 +601,7 @@ function ListInput<T, L extends string | Plural>(props: {
 				>
 					<button
 						type="button"
+						title={props.tooltips.add}
 						onclick={() => {
 							props.set(1, props.default);
 							focusers[1]?.();
@@ -605,6 +612,7 @@ function ListInput<T, L extends string | Plural>(props: {
 					<Show when={props.allow_empty}>
 						<button
 							type="button"
+							title={props.tooltips.remove}
 							onclick={() => {
 								props.set([]);
 								focusers = [];
@@ -636,6 +644,7 @@ function ListInput<T, L extends string | Plural>(props: {
 								>
 									<button
 										type="button"
+										title={props.tooltips.add}
 										onclick={() => {
 											props.set((a) => [
 												...a.slice(0, i() + 1),
@@ -649,6 +658,7 @@ function ListInput<T, L extends string | Plural>(props: {
 									</button>
 									<button
 										type="button"
+										title={props.tooltips.remove}
 										onclick={() => {
 											props.set((a) => [
 												...a.slice(0, i()),
@@ -814,6 +824,7 @@ function PersonWithRoleInput(props: {
 					set={child_setter(props.set, "names")}
 					EntryInput={PersonInput}
 					required
+					tooltips={i18n.person_with_role.names_tooltips}
 				/>
 			</div>
 		</>
