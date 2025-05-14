@@ -99,3 +99,7 @@ pre {
 	padding: 12px;
 	user-select: all;
 }
+
+button > svg {
+	height: 0.6em;
+}

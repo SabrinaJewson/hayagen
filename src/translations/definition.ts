@@ -59,6 +59,8 @@ export type Translation = {
 		prefix_label: Label;
 		suffix_label: Label;
 		alias_label: Label;
+		collapsed_tooltip: string;
+		expanded_tooltip: string;
 	};
 };
 

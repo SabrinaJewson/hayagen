@@ -141,6 +141,8 @@ export default translation({
 		prefix_label: "Prefix",
 		suffix_label: "Suffix",
 		alias_label: "Alias",
+		collapsed_tooltip: "Collapsed name fields",
+		expanded_tooltip: "Expanded name fields",
 	},
 });
 

@@ -682,9 +682,22 @@ function PersonInput(props: {
 	with_focus?: (focus: () => void) => void;
 	required?: boolean;
 }): JSX.Element {
+	const left_arrow = (
+		<svg viewBox="0 0 2 2">
+			<title>{i18n.person.collapsed_tooltip}</title>
+			<polygon fill="currentColor" points="0,1 2,0 2,2" />
+		</svg>
+	);
+	const down_arrow = (
+		<svg viewBox="0 0 2 2">
+			<title>{i18n.person.expanded_tooltip}</title>
+			<polygon fill="currentColor" points="0,0 2,0 1,2" />
+		</svg>
+	);
+
 	const toggle = (
 		<button type="button" onclick={() => props.set(toggle_person)}>
-			{props.data.kind === person_combined ? "⮜" : "⮟"}
+			{props.data.kind === person_combined ? left_arrow : down_arrow}
 		</button>
 	);
 
