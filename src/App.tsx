@@ -70,11 +70,7 @@ export default function (): JSX.Element {
 						{i18n.copy_yaml}
 					</button>
 				</p>
-				<TextInput
-					label={i18n.label_label}
-					data={label()}
-					set={set_label}
-				></TextInput>
+				<TextInput label={i18n.label_label} data={label()} set={set_label} />
 				<Entry data={data} set={set_data} />
 			</form>
 			<pre>{yaml()}</pre>
@@ -85,7 +81,8 @@ export default function (): JSX.Element {
 function read_recursive<T>(data: T): T {
 	if (Array.isArray(data)) {
 		return data.map(read_recursive) as T;
-	} else if (data instanceof Object) {
+	}
+	if (data instanceof Object) {
 		return Object.fromEntries(
 			Object.entries(data).map(([k, v]) => [k, read_recursive(v)]),
 		) as T;
@@ -193,20 +190,26 @@ function default_person(): Person {
 }
 
 function toggle_person(p: Person): Person {
-	if (p.kind === person_fields) {
-		return {
-			kind: person_combined,
-			combined_name: `${p.prefix && p.prefix + " "}${p.name}${p.given_name && ", " + p.given_name}${p.suffix && ", " + p.suffix}`,
-		};
-	} else {
-		return {
-			kind: person_fields,
-			name: p.combined_name,
-			given_name: "",
-			prefix: "",
-			suffix: "",
-			alias: "",
-		};
+	switch (p.kind) {
+		case person_fields: {
+			const prefix = p.prefix && `${p.prefix} `;
+			const given_name = p.given_name && `, ${p.given_name}`;
+			const suffix = p.suffix && `, ${p.suffix}`;
+			return {
+				kind: person_combined,
+				combined_name: `${prefix}${p.name}${given_name}${suffix}`,
+			};
+		}
+		case person_combined: {
+			return {
+				kind: person_fields,
+				name: p.combined_name,
+				given_name: "",
+				prefix: "",
+				suffix: "",
+				alias: "",
+			};
+		}
 	}
 }
 
@@ -235,17 +238,15 @@ function make_yaml(label: string, data: EntryData): string {
 	function try_numeric(s: string): number | string {
 		if (/^[0-9]+$/.test(s)) {
 			return Number.parseInt(s);
-		} else {
-			return s;
 		}
+		return s;
 	}
 
 	function maybe_unwrap<T>(array: T[]): T | T[] {
 		if (array.length === 1) {
 			return array[0];
-		} else {
-			return array;
 		}
+		return array;
 	}
 
 	function preprocess(data: EntryData): Record<string, unknown> {
@@ -280,21 +281,24 @@ function make_yaml(label: string, data: EntryData): string {
 						? data.url.value
 						: data.url,
 		};
-		if (new_data["archive"] === "") {
-			delete new_data["archive_location"];
-			delete new_data["call_number"];
+		if (new_data.archive === "") {
+			// biome-ignore lint/performance/noDelete: no other way to write this code
+			delete new_data.archive_location;
+			// biome-ignore lint/performance/noDelete: no other way to write this code
+			delete new_data.call_number;
 		}
 		return new_data;
 	}
 	function preprocess_person(person: Person): unknown {
 		if (person.kind === person_combined) {
 			return person.combined_name;
-		} else {
-			const person2: Record<string, unknown> = { ...person };
-			delete person2["combined_name"];
-			delete person2["kind"];
-			return person2;
 		}
+		const person2: Record<string, unknown> = { ...person };
+		// biome-ignore lint/performance/noDelete: shortest way to write this code
+		delete person2.combined_name;
+		// biome-ignore lint/performance/noDelete: shortest way to write this code
+		delete person2.kind;
+		return person2;
 	}
 
 	return YAML.stringify({ [label]: preprocess(data) }, (_, v) => {
@@ -312,7 +316,7 @@ function make_yaml(label: string, data: EntryData): string {
 
 const DATE_REGEX: string = "-?[0-9]{4}(-[01][0-9](-[0-3][0-9])?)?";
 const TIMESTAMP_REGEX: string = "(([0-9]+:)?[0-9]+:)?[0-9]+:[0-9]+(,[0-9]+)?";
-const TIMESTAMP_RANGE_REGEX: string = TIMESTAMP_REGEX + "-" + TIMESTAMP_REGEX;
+const TIMESTAMP_RANGE_REGEX: string = `${TIMESTAMP_REGEX}-${TIMESTAMP_REGEX}`;
 
 function Entry(props: {
 	data: EntryData;
@@ -566,7 +570,7 @@ function ListInput<T, L extends string | Plural>(props: {
 			<Match when={props.data.length === 0}>
 				<div class="row">
 					<LabelDisplay label={label()} />
-					<span class="grow-me"></span>
+					<span class="grow-me" />
 					<button
 						type="button"
 						onclick={() => {
@@ -584,7 +588,9 @@ function ListInput<T, L extends string | Plural>(props: {
 					label={label()}
 					data={props.data[0]}
 					set={child_setter(props.set, 0)}
-					with_focus={(f) => (focusers[0] = f)}
+					with_focus={(f) => {
+						focusers[0] = f;
+					}}
 					required={props.required || false}
 				>
 					<button
@@ -623,7 +629,9 @@ function ListInput<T, L extends string | Plural>(props: {
 								<props.EntryInput
 									data={el}
 									set={child_setter(props.set, i())}
-									with_focus={(f) => (focusers[i()] = f)}
+									with_focus={(f) => {
+										focusers[i()] = f;
+									}}
 									required
 								>
 									<button
@@ -676,13 +684,13 @@ function PersonInput(props: {
 }): JSX.Element {
 	const toggle = (
 		<button type="button" onclick={() => props.set(toggle_person)}>
-			{props.data.kind == person_combined ? "⮜" : "⮟"}
+			{props.data.kind === person_combined ? "⮜" : "⮟"}
 		</button>
 	);
 
 	return (
 		<Switch>
-			<Match when={props.data.kind == person_combined}>
+			<Match when={props.data.kind === person_combined}>
 				<TextInput
 					label={props.label}
 					data={(props.data as PersonCombined).combined_name}
@@ -694,7 +702,7 @@ function PersonInput(props: {
 					{props.children}
 				</TextInput>
 			</Match>
-			<Match when={props.data.kind == person_fields}>
+			<Match when={props.data.kind === person_fields}>
 				<PersonFieldsInput
 					label={props.label}
 					data={props.data as PersonFields}
@@ -721,7 +729,7 @@ function PersonFieldsInput(props: {
 			<Show when={props.label !== undefined}>
 				<div class="row">
 					<LabelDisplay label={props.label!} />
-					<span class="grow-me"></span>
+					<span class="grow-me" />
 					{props.children}
 				</div>
 			</Show>
@@ -771,7 +779,7 @@ function PersonWithRoleInput(props: {
 			<Show when={props.label !== undefined}>
 				<div class="row">
 					<LabelDisplay label={props.label!} />
-					<span class="grow-me"></span>
+					<span class="grow-me" />
 					{props.children}
 				</div>
 			</Show>
@@ -865,7 +873,7 @@ function TextInput(props: {
 					oninput={(e) => props.set(e.target.value)}
 					onchange={(e) => props.change?.(e.target.value)}
 					required={props.required}
-					ref={(e) => props.with_focus && props.with_focus(() => e.focus())}
+					ref={(e) => props.with_focus?.(() => e.focus())}
 					placeholder={props.placeholder}
 					pattern={props.pattern}
 					title={props.title}
@@ -911,6 +919,7 @@ function MaybeLabel(props: {
 }): JSX.Element {
 	return (
 		<Show when={props.label !== undefined} fallback={props.children}>
+			{/* biome-ignore lint/a11y/noLabelWithoutControl: ensured by caller */}
 			<label>
 				<LabelDisplay label={props.label!} />
 				{props.children}

@@ -55,7 +55,8 @@ export default translation({
 		abstract_label: "Abstract",
 		genre_label: {
 			name: "Genre",
-			description: `Type, class, or subtype of the item (e.g. “Doctoral dissertation” for a PhD thesis; “NIH Publication” for an NIH technical report). Do not use for topical descriptions or categories (e.g. “adventure” for an adventure movie).`,
+			description:
+				"Type, class, or subtype of the item (e.g. “Doctoral dissertation” for a PhD thesis; “NIH Publication” for an NIH technical report). Do not use for topical descriptions or categories (e.g. “adventure” for an adventure movie).",
 		},
 		editor_label: plural("Editor", "Editors"),
 		affiliated_label: {
