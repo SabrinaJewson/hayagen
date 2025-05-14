@@ -109,13 +109,13 @@ export default translation({
 		language_label: "Jazyk",
 		archive_label: {
 			name: "Archív",
-			description: "Jméno instituce/sbírky, kde je záznam uchováván."
+			description: "Jméno instituce/sbírky, kde je záznam uchováván.",
 		},
 		archive_location_label: "Místo archívu",
 		call_number_label: {
 			name: "Signatura",
 			description:
-				"Označení pod kterým je záznam uložen v knihovně, instituci, nebo sbírce."
+				"Označení pod kterým je záznam uložen v knihovně, instituci, nebo sbírce.",
 		},
 		note_label: "Poznámka",
 		parent_label: "Nadřazený záznam",
@@ -157,8 +157,8 @@ export default translation({
 		prefix_label: "Před jménem",
 		suffix_label: "Za jménem",
 		alias_label: "Přezdívka",
-		collapsed_tooltip: "Collapsed name fields",
-		expanded_tooltip: "Expanded name fields",
+		collapsed_tooltip: "Sbalené pole s jmény",
+		expanded_tooltip: "Rozbalené pole s jmény",
 	},
 });
 
