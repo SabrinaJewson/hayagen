@@ -114,8 +114,7 @@ export default translation({
 		archive_location_label: "Miesto archívu",
 		call_number_label: {
 			name: "Signatúra",
-			description:
-				"Číslo položky v knižnici, inštitúcii alebo zbierke.",
+			description: "Číslo položky v knižnici, inštitúcii alebo zbierke.",
 		},
 		note_label: "Poznámka",
 		parent_label: "Nadradená",

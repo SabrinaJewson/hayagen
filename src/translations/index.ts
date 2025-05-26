@@ -1,8 +1,8 @@
+import cs from "./cs";
 import type { Translation } from "./definition.ts";
 import en from "./en";
-import cs from "./cs";
-import sk from "./sk";
 import fr from "./fr";
+import sk from "./sk";
 
 export const LANGS = ["en", "cs", "sk", "fr"] as const;
 
