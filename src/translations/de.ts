@@ -7,7 +7,8 @@ export default translation({
 	copy_yaml: "YAML kopieren",
 	label_label: {
 		name: "Label",
-		description: "Der Name über welchen der Eintrag in Typst referenziert wird.",
+		description:
+			"Der Name über welchen der Eintrag in Typst referenziert wird.",
 	},
 	delete_tooltip: "Diesen Eintrag löschen.",
 	extra_tooltip: "Es sind zusätzlche Textfelder mit diesem Eintrag verbunden.",
@@ -47,9 +48,9 @@ export default translation({
 			scene: "Szene",
 			thesis: "Abschlussarbeit",
 
-      // There are possible translations like "Gesprächsfaden" or "Diskussionsfaden", but they feel overly forced.
-      // I just assume that most people that would use this type know what the English term means.
-      thread: "Thread",
+			// There are possible translations like "Gesprächsfaden" or "Diskussionsfaden", but they feel overly forced.
+			// I just assume that most people that would use this type know what the English term means.
+			thread: "Thread",
 
 			video: "Video",
 			web: "Internet",
@@ -90,7 +91,8 @@ export default translation({
 		},
 		organization_label: {
 			name: "Organisation",
-			description: "Organisation bei/für welche(r) der Eintrag produziert wurde.",
+			description:
+				"Organisation bei/für welche(r) der Eintrag produziert wurde.",
 		},
 		issue_label: {
 			name: "Ausgabe",
@@ -113,7 +115,8 @@ export default translation({
 		language_label: "Sprache",
 		archive_label: {
 			name: "Archiv",
-			description: "Name des/der Instituts/Sammlung in der sich der Eintrag befindet.",
+			description:
+				"Name des/der Instituts/Sammlung in der sich der Eintrag befindet.",
 		},
 		archive_location_label: "Archivort",
 		call_number_label: {
@@ -135,7 +138,8 @@ export default translation({
 
 			// Both 'annotator' and 'commentator' are usually translated as the same word: "Kommentator:in".
 			// Problem with that is that 'annotator's usually write comments while 'commentator's normally give non-written comments.
-			annotator: "Kommentator:in (z.B. in Dichtung und wissenschaftlichen Ausgaben)",
+			annotator:
+				"Kommentator:in (z.B. in Dichtung und wissenschaftlichen Ausgaben)",
 			commentator: "Kommentator:in (z.B. in Presse und Rundfunk)",
 
 			// Many online translations recommend "Schauspieler", but that leans more into 'actor' as in cinema and theatre.
@@ -152,7 +156,7 @@ export default translation({
 			// According to German Wikipedia:
 			// https://de.wikipedia.org/w/index.php?title=Executive_Producer&oldid=249431993
 			"executive-producer": "Geschäftsführende(r) Produzent:in",
-			
+
 			foreword: "Vorwort Autor:in",
 			founder: "Gründer:in",
 			holder: "Besitzer:in",
